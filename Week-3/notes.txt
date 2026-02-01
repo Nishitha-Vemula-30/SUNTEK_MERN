@@ -1,0 +1,177 @@
+backend
+http sever
+apis
+database
+
+if we are using any port number no other should use that port number
+
+client ==>may be frontend app or other backend app
+=============================
+REST API
+===========================
+REST=====representational state transfer
+api contains routes
+endpoint= is a url where api can be accessed to perform specific operations on resourcse
+REST APIs usually send and receive data in JSON:
+                         (resource)(ID)
+https://api.example.com  /  users/ 123
+=====base url========== =endpoint=
+
+base url+endpoint===api
+
+always use nouns for endpoint
+use lowercase
+use plural
+use hypen for mixed words
+GET/users =good
+GET/getUsers==bad 
+
+
+=============================================
+MONGODB
+Data = Raw facts
+Information = Processed / meaningful data
+Database = Place where data is stored
+Database Server = Software that runs a database; install it on any computer to use it
+DBMS = Software that manages databases (store, retrieve, security, ACID)
+RDBMS = Data stored in tables (rows & columns) like MySQL, Oracle, DB2
+HTTP Server = Software that handles HTTP requests
+Web Server = HTTP server that serves web pages
+
+SQL = Language used to work with databases
+MySQL = RDBMS that uses SQL language
+NoSQL = Non-table databases for flexible data
+MongoDB = NoSQL database (document-based)
+
+
+rdbms         MONGODB
+database      database
+tables        collections
+rows          documnets
+colmuns       fields
+
+data stored as bson 
+
+====================================================================
+//show databases
+use database-name
+if database there then it will use otherwise it creates
+
+//read databases
+show databases
+
+//create collections
+db.createCollection("users")
+
+
+
+//CRUD
+insertOne({})
+insertMany([{}])
+find()
+findOne()
+update have 2 fields 1st is condition,2nd is update
+
+=============================================================
+QUERY OPERATORS
+{field:{operator:value}}
+comparison query OPERATORS
+$eq,neq,gt,gte,lt,lte,in,nin
+show dbs 
+show collections
+==============================================
+=======DAY 6======
+mongodb have NESTED/EMBEDDED DOCUMENTS
+
+{
+    name:""
+    group:["nishi","cherry","it"]  //nested documents
+}
+
+_id: ObjectId('697d7ffafcc8d602c6a6f058'),
+  eno: 1,
+  ename: 'Nishitha',
+  skills: [          //array
+    'python',
+    'js',
+    'java'
+  ],
+  address: {         //not object its document
+    city: 'Hyd',     //nested/embedded document
+    pincode: 345678
+  }
+//find whos city is hyd when using nested documents .use in "" so it identifies as same obj
+     db.emps.find({"address.city":"Hyd"})
+
+//comaparing on eelement of ana array
+     db.emps.find({skills:"java"})
+
+//comparing multiple elements of an array
+//if we give like this array ,it will check same array as this in documnets
+     db.emps.find({skills:["java","js"]})
+     gives null          
+     //if we give same array in document then give soutput 
+     db.emps.find({skills:["python","js","java"]})
+    
+    //it will not check order when we give $all or $in both are same,then we can retrieve the data whose skills are js,python
+    db.emps.find({skills:{$all:["js","python"]}})
+
+//updating name
+    db.emps.updateOne({eno:1},{$set:{ename:"Nishi"}})
+//updating nested dodcuments
+    //add a new property in nested object
+       db.emps.updateOne({eno:1},{$set:{"address.street":"Nagole"}})
+
+    //replacing all skills with react
+    db.emps.updateOne({eno:1},{$set:{"skills":"React"}})
+    db.emps.updateOne({eno:1},{$set:{"skills":["React","js","html"]}})
+
+    //changing vlaue of existing property 
+       db.emps.updateOne({eno:1},{$set:{"address.city":"Vizag"}})
+
+           
+$set=add or modify/update
+  //adding new property
+     db.emps.updateOne({eno:1},{$set:{position:"manager"}})
+
+$unset=delete a field 
+    db.emps.updateOne({eno:1},{$unset:{ename:""}})
+    //eno: 1,
+  skills:
+  //ename is deleted
+  //for nested 
+  db.emps.updateOne({eno:1},{$unset:{"address.pincode":""}})
+
+//inserting element into array at last using $push
+     db.emps.updateOne({eno:1},{$push:{"skills":"CSS"}})
+//add more than on skills to add in an array one by one
+     db.emps.updateOne({eno:1},{$push:{skills:{$each:["mongo","node"]}}})
+
+
+//addToSet matches but not modifies
+     db.emps.updateOne({eno:1},{$addToSet:{"skills":"angular"}})     
+
+
+$addToSet  : checks if its there or not ,if there not inserts,if no then adds,no duplicates
+$push      : add element into array
+$push & $each: add multiple elemnts to array
+$pop      : removes the first/last elelment of an array
+==============================================================
+//DELETING
+//removes last element
+      db.emps.updateOne({eno:1},{$pop:{skills:1}})
+      index
+      first element = -1
+      last elelment = 1
+
+//remove specific elemnt then use $pull
+     db.emps.updateOne({eno:1},{$pull:{skills:"html"}})
+
+     
+============================================================
+
+
+
+
+
+

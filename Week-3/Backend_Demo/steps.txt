@@ -1,0 +1,188 @@
+//steps to create BACKEND
+
+1.Generate package.json   (like register)
+         npm init -y    node package manager ,initialize,-yes default
+         it have all predefined library/module ,we can just import reusabilty
+
+2.Create HTTP server
+         a.Install & import express module(express is one of the module in 7lakhs and used to create HTTP sever and create APIs)      
+              npm install express 
+              (node_modules)if not there then craetes node_modules otherwise only pacakge-lock.json
+              and we can see dependencies in package.json
+          b.import express module    
+               import express from 'express'
+          c. run using => node server.js
+
+
+
+HTTP Req types(CRUD)
+   GET=Read resources   
+   POST=create a new resources
+   PUT=update a resources
+   DELETE=Delete a resource    
+USER API:
+   http://127.0.0.1:3000
+   http://localhost:3000  //easy to remember
+   server.js==base url
+   localhost==domain name   
+   127.0.0.1==IP address
+   url path start with "/"
+
+   GET     http://127.0.0.1:3000/users   //example
+   POST    http://127.0.0.1:3000/user
+   PUT     http://127.0.0.1:3000/users/<id>
+   DELETE  http://127.0.0.1:3000/users
+
+REST CLIENT IS LIKE POSTMAN ,WE CAN INSTALL IN VSCODE EXTENSIONS   
+create a file as req.http and write the (GET http://127.0.0.1:3000/users)example
+Then start server and click ==> send request
+Keep ### for every separate other requests
+
+
+In Response object
+============we can seee metadata and message
+
+we can give message in 2 types in res.json()::message,payload
+always restart server whwn any change to code
+status codes must be before json
+
+
+even we donot specify status codes,it is default server gives status codes
+200====successfull completion of any operations done by us
+
+==========================================
+MANUALLY RESTARTING SERVER IS RISKY
+AUTOMATE THIS RESTART BY using
+==========================================
+NODEMON 
+ npm install -g  nodemon
+ -g is available globally used for every application
+ we can use this nodemon in any file in this app
+ after installing 
+ run as nodemon server.js
+ server will restart the server when any changes are made to code
+ mon===monitoring 
+
+
+ =====================================
+ json type of data should be given as response
+
+ POST http://127.0.0.1:3000/users
+Content-Type: application/json
+
+{
+    "id":100,
+    "name":"Nishitha",
+    "age":20
+}
+ let newUser=req.body
+     console.log(newUser)
+     //undefined it is uanble to pass the json
+
+     { id: 100, name: 'Nishitha', age: 20 }we get this if we use ==> app.use(express.json())
+
+{
+  "message": "All users",
+  "payload": [
+    
+    {
+      "id": 100,
+      "name": "Nishitha",
+      "age": 20
+    },
+    {
+      "id": 101,
+      "name": "Nikitha",
+      "age": 20
+    }
+  ]
+}     
+here we are getting past data also "Nishitha" bcz it is in-memory data
+if we restart the data the data will be gone 
+
+
+====================================================
+app.use(express.json())
+
+//get,delete donot have req.body and post,put have req.body
+URL PARAMETERS
+"/users/:id"
+/users is path
+/:id url parameter
+for url parameter we should specify (:)
+
+req.body==>contains json resource
+
+app.get("/products/:id",(req,res)=>{
+})
+
+app.get("/products/:brand",(req,res)=>{
+})
+
+here if we give like this ,in parameters if we anything 
+it will take /products/id not goto products/brand
+so rename like this 
+app.get("/products-id/:id",(req,res)=>{
+})
+
+app.get("/products-brand/:brand",(req,res)=>{
+})
+===================================================
+SPLICE
+    index based insertion,deletion,updation
+
+======================
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+=============================
+MIDDLEWARES
+
+    existed blw incoming req and actual routes
+    req should be given to middleware
+
+    express consists of inbuilt middleware
+    extract json to js object and passed to 
+    middleware will give res to req if it is not valid
+    if valid passed to forward next middleware
+
+HOW TO CREATE CUSTOM MIDDLEWARE?
+//create a custom middleware
+function middleware(req,res,next){
+    console.log("middleware executed")
+}
+//to execute for every incoming request
+app.use(middleware)
+
+
+
+InBuilt MIDDLEWARES
+
+====================================================
+when we get a error we get in HTML 
+
+
+GET http://localhost:3000/user-api/users
+we use user-api/users
+we can inform http server which startswith user-api then it belongs to users
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
