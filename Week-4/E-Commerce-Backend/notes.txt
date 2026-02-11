@@ -1,0 +1,156 @@
+projection
+    to filter at field level not document level
+    to get specific fields not all fields
+    like select sttaement
+   find({condition},{projection}) 
+   find({},{username:1,_id:0})
+   projecting username and stopping default projecting _id
+    find({},{username:1,_id:0})
+    if there is no condition also we should specify empty braces bcz without braces it feels it is condition
+
+UNIQUE PROPERTY
+     we have object iD for evry document
+     to identify user uniquely ,we use unique
+     bcz we dont know object_id, mongodb knows
+     if we type username in any login page it says username is taken
+
+SAVING PASSWORD
+    when hacker hacks the database,then he knows PASSWORD
+    for securing password we use this
+    encrytion,hashing for change of structure
+    encrypt:security key ,anyone decrypt the key
+    hashing is irreversible like encrytion
+    so PASSWORDS SHOULD BE HASHED BEFORE STORING PASSWORD
+    bcrypt is to hashing
+    cost factor:rounds high,high security
+    bcrypt.js 
+        npm i bcryptjs
+
+    UserApp.post("/users",async(req,res)=>{
+    //get newuser from req
+    let newUser=req.body
+//hash th password
+    let hashedpassword=await hash(newUser.password,12)
+//replace the plain password to hashed password
+    newUser.password=hashedpassword
+    //create new user document
+    let newUserDoc=new userModel(newUser)
+    await newUserDoc.save()
+    //send res
+    res.status(200).json({message:"user created"})
+    })
+
+when the password is verified?=>when we login
+
+AUTHENTICATION
+      user login is same as user authentication
+      user login is post 
+      user authentication===submitting credentials and getting a token.
+          it is same as pay the amount and get the ticket.
+             once the token received by user then he is an authenticated user
+      every api conatins 2 ROUTES
+      public ROUTES:::the routes accessible by everyone
+      protected ROUTES:::accessible only by authenticated users
+
+
+steps for user AUTHENTICATION
+  after receiving user credentials object
+   1.API verify the username
+   2.if username is matched ,it compares the password
+   3.if PASSWORDS are matched,it generates a token and encrypt a token
+   4.finally it sends a token response back to the client
+
+JSON WEB TOKEN (JWT)
+   once the user credentials are veriified,then the login route creates a JWT TOKEN    
+   jwt.io is website to create tokeen
+   npm i jsonwebtoken
+
+
+When we use user login
+===in amazon if we click anything it is public route
+    when we write a review or buy product then it asks user login by protected route 
+exmaple:
+authentication ticket in theatre(tokens like tickts)
+========================================================================
+STORAGE OF TOKEN IN browser       
+when browser receives token,it needs to stored somewhere temporarly until it accessd
+
+stores tokens in browser in 3 STORAGE LOACTIONS
+===local storage,
+session storage,
+cookies ,
+these are not safe to store data bcz browser will access it
+
+LOCAL STORAGE & SESSION STORAGE content can be accessible by js of the browser.
+NORMAL COOKIE CAN ALSO BE ACCESSIBLE BY JS OF THE browser
+"HTTP ONLY cookies "cannot be accessible by js of the browser,
+so this is the safest place to store JWT Token after user authentication
+
+if we store cookies in http only ,then no one can access from frontend,
+only backend server can access,delete and anything
+
+res is under control of server
+==================================================================================
+wheneevr we store toekn in cookies no need to send to every request manually,it will send directly to req 
+
+for sessionand local we need to send manually
+======================================================
+MAKING AUTHENTICATED REQUEST 
+   1.when client application makes request after successfull login,
+   the httpOnly cookie will be attached to every req automatically
+   2.the middleware in express can extract the cookie from request using cookie-parser module
+       http://localhost:4000/user-api/auth 
+
+=============================================
+public and protected routes
+=================================================
+DAY 8
+
+embedding document and reference document
+
+EMBEDDED
+--------
+copy of document stored in this place 
+if we change price in original product,it will not refelct in copied one
+this may lead to data inconsistency
+cart:[{
+    productname:""",
+    price:""
+}]
+
+REFERENECE 
+----------
+take reference to the cart based on product _id
+refers to the product object which is in product
+when we change price in product ,same is reflected bcz both are pointing to same refernce 
+when a document is depending on another ,we use refernce
+cart:[{ref:"product"}]
+=======================================================================================
+password trap in mongoose
+
+"" if we give empty string also ,user will created ,it is only for PASSWORDS  not for other fields like name,email
+it is trap,it is not giving password required
+
+here we are hashing password only,it considers empty string as string ,converts into hash
+  await new UserModel(newUser).validate()
+
+
+======================================
+new always returns reference
+why this is scalable backend?
+bcz we can add/remove anything easily without effecting existing behaviour,other routes
+
+=====================================
+AUTHORIZATION
+===role:admin,user
+if there is no role,then no AUTHORIZATION 
+==================================
+BACKEND IS main part in fullstack
+DATABASE IS HERO IN BACKEND
+DATABASE ARCHITECTURE IS IMPORTANT
+
+
+
+
+
+

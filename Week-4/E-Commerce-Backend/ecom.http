@@ -1,0 +1,37 @@
+###
+GET http://localhost:5000/user-api/users
+###
+POST http://localhost:5000/user-api/users
+Content-Type: application/json
+
+{
+    "name":"Nishitha",
+    "email":"23eg112d30@anurag.edu.in",
+    "password":"ygyuy",
+    "cart":[]
+}
+
+###
+GET http://localhost:5000/product-api/products
+###
+POST http://localhost:5000/product-api/products
+Content-Type: application/json
+
+{
+    "productName":"Fridge",
+    "price":25000,
+    "brand":"LG"
+}
+
+###Req to add product to cart,adding new product to the cart of the user
+PUT http://localhost:5000/user-api/user-cart/user-id/698072173f99c53139e8f171/product-id/69806b81a3093678f55039a4
+//not mandatory to put data content-type,we r mentioning in url only
+
+
+//two ways to add to cart by user,
+//findONE({email:req.body.email})//the url is visible then anyone will hack
+//findById(objId)
+
+
+###added a field quantity
+PUT http://localhost:5000/user-api/users/user-id/698072173f99c53139e8f171/product-id/69806b81a3093678f55039a4
