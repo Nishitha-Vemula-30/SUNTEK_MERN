@@ -1,0 +1,28 @@
+nav{
+    background-color: rgb(215, 230, 225);
+    padding:40px;
+}
+nav button{
+    list-style-type: none;
+    background-color: blue;
+    height: 40px;
+    width: 150px;
+}
+
+.padd{
+    padding: 60px;
+}
+
+.cards{
+    width:300px;
+    padding: 25px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    display: flex;  
+}
+.row{
+    display: flex;
+}
+.row button{
+    background-color: rgb(199, 206, 206);
+}
