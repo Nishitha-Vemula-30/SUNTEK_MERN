@@ -1,0 +1,41 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+nav ul{
+     display: flex;
+     list-style-type: none;  /*to remove dots for list items*/
+     justify-content: end;  
+     gap:20px;
+}
+
+main{
+    background-color: aquamarine;
+    text-align: center;
+    padding: 20px;
+}
+main img{
+     border-radius: 100px;/*to make image corners round */
+}
+
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.cards{
+    gap: 20px;
+    flex: 1 1 300px;
+    padding: 20px;
+    margin: 20px;
+}
