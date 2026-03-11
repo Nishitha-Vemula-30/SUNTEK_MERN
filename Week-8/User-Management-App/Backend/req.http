@@ -1,0 +1,21 @@
+GET http://localhost:5000/user-api/users
+###
+POST http://localhost:5000/user-api/users
+Content-Type: application/json
+
+{
+    "name":"nishitha1",
+    "email":"nishitha1@gmail.com",
+    "DateOfBirth":"2005-01-30",
+    "mobilenumber":8929674849
+}
+
+###
+GET http://localhost:5000/user-api/users/69a690d4268d4689ba96eef3
+
+###
+DELETE http://localhost:5000/user-api/users/69a690d4268d4689ba96eef3
+
+###activate user
+PATCH http://localhost:5000/user-api/users/69a690d4268d4689ba96eef3
+
